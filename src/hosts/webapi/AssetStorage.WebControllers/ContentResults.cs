@@ -79,8 +79,9 @@ internal static class ContentResults
             };
         }
 
-        await using var stream = await service.OpenContentAsync(
+        var stream = await service.OpenContentAsync(
             snapshot.Version, cancellationToken).ConfigureAwait(false);
+        await using var configuredStream = stream.ConfigureAwait(false);
         using var reader = new StreamReader(
             stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true, leaveOpen: false);
         var text = await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
