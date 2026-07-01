@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../AssetStorage.WebControllers/AssetStorage.WebControllers.csproj" />
+    <ProjectReference Include="../../aspire/AssetStorage.ServiceDefaults/AssetStorage.ServiceDefaults.csproj" />
+    <ProjectReference Include="../../../services/AssetStorage.Domain/AssetStorage.Domain.csproj" />
+    <ProjectReference Include="../../../infrastructure/AssetStorage.Sqlite/AssetStorage.Sqlite.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.OpenApi" />
+  </ItemGroup>
+</Project>

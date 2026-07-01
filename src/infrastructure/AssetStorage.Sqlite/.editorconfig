@@ -1,0 +1,15 @@
+[*.cs]
+# Microsoft.Data.Sqlite implements async disposal/read APIs over an in-process
+# provider. Operational awaits still use ConfigureAwait(false).
+dotnet_diagnostic.CA1849.severity = none
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.MA0004.severity = none
+dotnet_diagnostic.S6966.severity = none
+dotnet_diagnostic.VSTHRD103.severity = none
+
+# SQL fragments are private constants or closed-set table/column values. All
+# runtime values are supplied as parameters.
+dotnet_diagnostic.CA2100.severity = none
+
+# Schema initialization is intentionally one atomic SQL definition.
+dotnet_diagnostic.MA0051.severity = none

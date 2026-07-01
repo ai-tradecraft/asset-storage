@@ -462,3 +462,14 @@ logs/
 # Lock files (keep language-specific ones if desired)
 # package-lock.json  # uncomment to ignore npm lock file
 # yarn.lock          # uncomment to ignore Yarn lock file
+
+# Asset Storage source and Aspire launch profiles intentionally share names
+# matched by broad template rules above.
+!src/infrastructure/AssetStorage.Sqlite/
+!src/infrastructure/AssetStorage.Sqlite/**
+src/infrastructure/AssetStorage.Sqlite/bin/
+src/infrastructure/AssetStorage.Sqlite/obj/
+!src/hosts/aspire/AssetStorage.AppHost/Properties/
+!src/hosts/aspire/AssetStorage.AppHost/Properties/launchSettings.json
+!src/hosts/webapi/AssetStorage.WebHost/Properties/
+!src/hosts/webapi/AssetStorage.WebHost/Properties/launchSettings.json

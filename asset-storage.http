@@ -1,0 +1,65 @@
+@baseUrl = http://localhost:5187
+@team = tradecraft
+@documentId = 00000000-0000-0000-0000-000000000000
+@documentVersionId = 00000000-0000-0000-0000-000000000000
+@folderId = 00000000-0000-0000-0000-000000000000
+
+### Create a Markdown document
+POST {{baseUrl}}/{{team}}/_api/v1/documents?logicalPath=agents/dotnet.md&idempotencyKey=create-dotnet-agent
+Content-Type: text/markdown
+X-Asset-Metadata: {"kind":"agent-definition"}
+
+# .NET Agent
+
+Agent instructions.
+
+### Append a compatible document version
+POST {{baseUrl}}/{{team}}/_api/v1/documents/{{documentId}}/versions?expectedVersion=1.0.0&bump=minor&idempotencyKey=update-dotnet-agent
+Content-Type: text/markdown
+X-Asset-Metadata: {"kind":"agent-definition"}
+
+# .NET Agent
+
+Updated agent instructions.
+
+### Get document metadata
+GET {{baseUrl}}/{{team}}/_api/v1/documents/{{documentId}}?version=1
+Accept: application/json
+
+### Get raw document content
+GET {{baseUrl}}/{{team}}/_api/v1/documents/{{documentId}}/content?version=1.0.0
+Accept: text/markdown
+
+### Render a logical Markdown document
+GET {{baseUrl}}/{{team}}/agents/dotnet.md
+Accept: text/html
+
+### Create a folder manifest
+POST {{baseUrl}}/{{team}}/_api/v1/folders
+Content-Type: application/json
+
+{
+  "logicalPath": "skills/dotnet",
+  "idempotencyKey": "create-dotnet-skills",
+  "entries": [
+    {
+      "path": "SKILL.md",
+      "documentVersionId": "{{documentVersionId}}"
+    }
+  ]
+}
+
+### Get a folder manifest
+GET {{baseUrl}}/{{team}}/_api/v1/folders/{{folderId}}?version=1
+Accept: application/json
+
+### Get a folder entry by ID
+GET {{baseUrl}}/{{team}}/_folders/{{folderId}}/SKILL.md?version=1&raw=true
+
+### Get a mounted folder entry
+GET {{baseUrl}}/{{team}}/skills/dotnet/SKILL.md?version=1
+Accept: text/html
+
+### Missing document problem response
+GET {{baseUrl}}/{{team}}/_api/v1/documents/00000000-0000-0000-0000-000000000001
+Accept: application/problem+json

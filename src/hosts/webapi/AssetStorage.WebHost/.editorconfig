@@ -1,0 +1,12 @@
+[*.cs]
+# DI-created exception handlers appear uninstantiated to static analysis.
+dotnet_diagnostic.CA1812.severity = none
+
+# Await-using expansion is flagged despite configured operational awaits.
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.MA0004.severity = none
+
+[Program.cs]
+# WebApplicationFactory requires the generated Program type to be public.
+dotnet_diagnostic.CA1515.severity = none
+dotnet_diagnostic.S1118.severity = none

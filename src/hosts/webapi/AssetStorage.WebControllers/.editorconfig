@@ -1,0 +1,7 @@
+[*.cs]
+# Raw request-body access is intentional for streaming arbitrary object bytes.
+dotnet_diagnostic.S6932.severity = none
+
+# Await-using expansion is flagged even though operational awaits explicitly
+# opt out of synchronization-context capture.
+dotnet_diagnostic.MA0004.severity = none

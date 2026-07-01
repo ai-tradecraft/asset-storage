@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/src/hosts/">
+    <Project Path="src/hosts/aspire/AssetStorage.AppHost/AssetStorage.AppHost.csproj" />
+    <Project Path="src/hosts/aspire/AssetStorage.ServiceDefaults/AssetStorage.ServiceDefaults.csproj" />
+    <Project Path="src/hosts/webapi/AssetStorage.WebControllers/AssetStorage.WebControllers.csproj" />
+    <Project Path="src/hosts/webapi/AssetStorage.WebHost/AssetStorage.WebHost.csproj" />
+  </Folder>
+  <Folder Name="/src/infrastructure/">
+    <Project Path="src/infrastructure/AssetStorage.Sqlite/AssetStorage.Sqlite.csproj" />
+  </Folder>
+  <Folder Name="/src/services/">
+    <Project Path="src/services/AssetStorage.Abstractions/AssetStorage.Abstractions.csproj" />
+    <Project Path="src/services/AssetStorage.Domain/AssetStorage.Domain.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AssetStorage.Domain.Tests/AssetStorage.Domain.Tests.csproj" />
+    <Project Path="tests/AssetStorage.Sqlite.Tests/AssetStorage.Sqlite.Tests.csproj" />
+    <Project Path="tests/AssetStorage.WebApi.Tests/AssetStorage.WebApi.Tests.csproj" />
+  </Folder>
+</Solution>

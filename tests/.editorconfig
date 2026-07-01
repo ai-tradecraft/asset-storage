@@ -6,3 +6,13 @@
 # convention available in tests without relaxing the rule for production code.
 [*.cs]
 dotnet_diagnostic.CA1707.severity = none
+
+# Test methods intentionally keep complete Arrange/Act/Assert scenarios together.
+dotnet_diagnostic.MA0051.severity = none
+
+# Test runners do not install a synchronization context and test fixtures favor
+# contract types to make adapter substitution explicit.
+dotnet_diagnostic.CA2007.severity = none
+dotnet_diagnostic.MA0004.severity = none
+dotnet_diagnostic.CA1859.severity = none
+dotnet_diagnostic.CA1515.severity = none
