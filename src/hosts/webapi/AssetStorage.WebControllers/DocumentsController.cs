@@ -10,6 +10,11 @@ namespace AssetStorage.WebControllers;
 public sealed class DocumentsController(IAssetStorageService service) : ControllerBase
 {
     /// <summary>Creates a document from the raw request body.</summary>
+    /// <param name="team">The team name from the route.</param>
+    /// <param name="logicalPath">The optional logical path for the document.</param>
+    /// <param name="idempotencyKey">The idempotency key for duplicate detection.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The created document response with 201 status, or 200 if idempotent.</returns>
     [HttpPost]
     [ProducesResponseType<DocumentResponse>(StatusCodes.Status201Created)]
     public async Task<ActionResult<DocumentResponse>> CreateAsync(
@@ -37,6 +42,13 @@ public sealed class DocumentsController(IAssetStorageService service) : Controll
     }
 
     /// <summary>Appends an immutable document version from the raw request body.</summary>
+    /// <param name="team">The team name from the route.</param>
+    /// <param name="documentId">The document identifier from the route.</param>
+    /// <param name="expectedVersion">The expected current version for optimistic concurrency.</param>
+    /// <param name="bump">The version component to increment (major, minor, or patch).</param>
+    /// <param name="idempotencyKey">The idempotency key for duplicate detection.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The appended document response with 201 status, or 200 if unchanged or idempotent.</returns>
     [HttpPost("{documentId:guid}/versions")]
     [ProducesResponseType<DocumentResponse>(StatusCodes.Status201Created)]
     public async Task<ActionResult<DocumentResponse>> AppendVersionAsync(
@@ -67,6 +79,11 @@ public sealed class DocumentsController(IAssetStorageService service) : Controll
     }
 
     /// <summary>Gets metadata for a selected document version.</summary>
+    /// <param name="team">The team name from the route.</param>
+    /// <param name="documentId">The document identifier from the route.</param>
+    /// <param name="version">The optional version selector (major, major.minor, or major.minor.patch).</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The document response with metadata, or 404 if not found.</returns>
     [HttpGet("{documentId:guid}")]
     [ProducesResponseType<DocumentResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,6 +99,12 @@ public sealed class DocumentsController(IAssetStorageService service) : Controll
     }
 
     /// <summary>Streams the raw bytes for a selected document version.</summary>
+    /// <param name="team">The team name from the route.</param>
+    /// <param name="documentId">The document identifier from the route.</param>
+    /// <param name="version">The optional version selector.</param>
+    /// <param name="download">Indicates whether to set Content-Disposition for download.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A file stream result with the document content, or 404 if not found.</returns>
     [HttpGet("{documentId:guid}/content")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -99,6 +122,9 @@ public sealed class DocumentsController(IAssetStorageService service) : Controll
             : await ContentResults.RawAsync(service, snapshot, download, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>Parses metadata JSON from a header value.</summary>
+    /// <param name="json">The JSON string or empty string.</param>
+    /// <returns>A cloned JSON element.</returns>
     private static JsonElement ParseMetadata(string json)
     {
         using var document = JsonDocument.Parse(string.IsNullOrWhiteSpace(json) ? "{}" : json);

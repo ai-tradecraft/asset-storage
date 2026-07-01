@@ -3,8 +3,13 @@ using AssetStorage.Abstractions;
 
 namespace AssetStorage.WebControllers;
 
+/// <summary>Maps domain snapshots to API response contracts.</summary>
 internal static class ResponseMapping
 {
+    /// <summary>Maps a document snapshot to an API response.</summary>
+    /// <param name="snapshot">The document snapshot from the domain.</param>
+    /// <param name="created">Indicates whether this was a creation or idempotent reuse.</param>
+    /// <returns>A document response contract.</returns>
     internal static DocumentResponse ToResponse(DocumentSnapshot snapshot, bool created)
     {
         using var metadata = JsonDocument.Parse(snapshot.Version.MetadataJson);
@@ -22,6 +27,10 @@ internal static class ResponseMapping
             created);
     }
 
+    /// <summary>Maps a folder snapshot to an API response.</summary>
+    /// <param name="snapshot">The folder snapshot from the domain.</param>
+    /// <param name="created">Indicates whether this was a creation or idempotent reuse.</param>
+    /// <returns>A folder response contract.</returns>
     internal static FolderResponse ToResponse(FolderSnapshot snapshot, bool created) =>
         new(
             snapshot.Folder.Id,

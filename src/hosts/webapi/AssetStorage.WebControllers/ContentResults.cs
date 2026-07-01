@@ -9,6 +9,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace AssetStorage.WebControllers;
 
+/// <summary>Creates IActionResult instances for streaming and rendering stored content.</summary>
 internal static class ContentResults
 {
     private static readonly MarkdownPipeline MarkdownPipeline =
@@ -22,6 +23,12 @@ internal static class ContentResults
         "image/webp"
     };
 
+    /// <summary>Returns raw document bytes as a file stream result.</summary>
+    /// <param name="service">The asset storage service.</param>
+    /// <param name="snapshot">The document snapshot to stream.</param>
+    /// <param name="download">Indicates whether to set Content-Disposition for download.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A file stream result for the document content.</returns>
     internal static async Task<IActionResult> RawAsync(
         IAssetStorageService service,
         DocumentSnapshot snapshot,
@@ -40,6 +47,14 @@ internal static class ContentResults
         };
     }
 
+    /// <summary>Returns content using HTTP content negotiation for HTML rendering when applicable.</summary>
+    /// <param name="service">The asset storage service.</param>
+    /// <param name="snapshot">The document snapshot to stream or render.</param>
+    /// <param name="request">The HTTP request for Accept header inspection.</param>
+    /// <param name="raw">Forces raw output instead of rendering.</param>
+    /// <param name="download">Indicates whether to set Content-Disposition for download.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Either a rendered HTML result or raw file stream.</returns>
     internal static async Task<IActionResult> NegotiatedAsync(
         IAssetStorageService service,
         DocumentSnapshot snapshot,

@@ -5,8 +5,14 @@ using System.Text.Json;
 
 namespace AssetStorage.WebHost.Middleware;
 
+/// <summary>Handles asset-storage domain exceptions and maps them to HTTP problem details.</summary>
 internal sealed partial class ApiExceptionHandler(ILogger<ApiExceptionHandler> logger) : IExceptionHandler
 {
+    /// <summary>Attempts to handle an asset-storage exception by returning an HTTP problem details response.</summary>
+    /// <param name="httpContext">The HTTP context.</param>
+    /// <param name="exception">The exception to handle.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>True if the exception was handled, false to continue the exception pipeline.</returns>
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,

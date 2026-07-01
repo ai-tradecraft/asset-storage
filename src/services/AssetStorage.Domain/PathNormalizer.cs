@@ -8,6 +8,10 @@ namespace AssetStorage.Domain;
 public static class PathNormalizer
 {
     /// <summary>Normalizes a team name for comparison and routing.</summary>
+    /// <param name="team">The team name to normalize.</param>
+    /// <returns>The normalized uppercase team name.</returns>
+    /// <exception cref="ArgumentException">Thrown when team is null or whitespace.</exception>
+    /// <exception cref="AssetValidationException">Thrown when team contains invalid characters.</exception>
     public static string NormalizeTeam(string team)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(team);
@@ -23,6 +27,12 @@ public static class PathNormalizer
     }
 
     /// <summary>Normalizes a logical or folder-relative path.</summary>
+    /// <param name="path">The path to normalize.</param>
+    /// <param name="maximumLength">The maximum allowed path length.</param>
+    /// <returns>The normalized uppercase path with forward slashes.</returns>
+    /// <exception cref="ArgumentException">Thrown when path is null or whitespace.</exception>
+    /// <exception cref="AssetLimitExceededException">Thrown when path exceeds maximum length.</exception>
+    /// <exception cref="AssetValidationException">Thrown when path contains invalid segments or characters.</exception>
     public static string Normalize(string path, int maximumLength)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);

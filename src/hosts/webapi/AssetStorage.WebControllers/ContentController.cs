@@ -9,6 +9,14 @@ namespace AssetStorage.WebControllers;
 public sealed class ContentController(IAssetStorageService service) : ControllerBase
 {
     /// <summary>Serves an entry from a folder addressed by stable ID.</summary>
+    /// <param name="team">The team name from the route.</param>
+    /// <param name="folderId">The folder identifier from the route.</param>
+    /// <param name="entryPath">The folder-relative entry path from the route.</param>
+    /// <param name="version">The optional version selector.</param>
+    /// <param name="raw">Forces raw output instead of HTML rendering.</param>
+    /// <param name="download">Indicates whether to set Content-Disposition for download.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Either rendered HTML or raw file stream, or 404 if not found.</returns>
     [AcceptVerbs("GET", "HEAD")]
     [Route("{team}/_folders/{folderId:guid}/{**entryPath}")]
     public async Task<IActionResult> GetFolderEntryAsync(
@@ -29,6 +37,13 @@ public sealed class ContentController(IAssetStorageService service) : Controller
     }
 
     /// <summary>Serves a document or mounted folder entry by logical path.</summary>
+    /// <param name="team">The team name from the route.</param>
+    /// <param name="logicalPath">The logical path to resolve from the route.</param>
+    /// <param name="version">The optional version selector.</param>
+    /// <param name="raw">Forces raw output instead of HTML rendering.</param>
+    /// <param name="download">Indicates whether to set Content-Disposition for download.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Either rendered HTML or raw file stream, or 404 if not found.</returns>
     [AcceptVerbs("GET", "HEAD")]
     [Route("{team}/{**logicalPath}", Order = 1000)]
     public async Task<IActionResult> GetLogicalContentAsync(

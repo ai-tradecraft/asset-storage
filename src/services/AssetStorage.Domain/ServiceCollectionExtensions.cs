@@ -8,6 +8,9 @@ namespace AssetStorage.Domain;
 public static class ServiceCollectionExtensions
 {
     /// <summary>Adds the domain service and validated limits.</summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configuration">The configuration containing AssetStorage section.</param>
+    /// <returns>The service collection for chaining.</returns>
     public static IServiceCollection AddAssetStorageDomain(
         this IServiceCollection services,
         IConfiguration configuration)

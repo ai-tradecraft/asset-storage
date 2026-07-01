@@ -8,6 +8,9 @@ namespace AssetStorage.Sqlite;
 public static class ServiceCollectionExtensions
 {
     /// <summary>Adds independently registered SQLite storage ports.</summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="configuration">The configuration containing AssetStorage:Sqlite section.</param>
+    /// <returns>The service collection for chaining.</returns>
     public static IServiceCollection AddAssetStorageSqlite(
         this IServiceCollection services,
         IConfiguration configuration)

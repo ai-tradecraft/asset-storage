@@ -6,6 +6,10 @@ namespace AssetStorage.Domain;
 public static class SemanticVersions
 {
     /// <summary>Increments one semantic-version component.</summary>
+    /// <param name="current">The current version.</param>
+    /// <param name="bump">The component to increment.</param>
+    /// <returns>A new version with the specified component incremented.</returns>
+    /// <exception cref="AssetValidationException">Thrown when bump value is not supported.</exception>
     public static AssetVersion Bump(AssetVersion current, VersionBump bump) => bump switch
     {
         VersionBump.Major => new(current.Major + 1, 0, 0),
@@ -15,6 +19,9 @@ public static class SemanticVersions
     };
 
     /// <summary>Parses an omitted, major, major-minor, or exact selector.</summary>
+    /// <param name="value">The optional version selector string.</param>
+    /// <returns>A version selector for querying versions.</returns>
+    /// <exception cref="AssetValidationException">Thrown when the selector format is invalid.</exception>
     public static VersionSelector ParseSelector(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
